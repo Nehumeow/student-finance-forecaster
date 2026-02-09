@@ -28,3 +28,51 @@ graph TD
         Backend <-->|Read/Write| DB[(H2 Database<br/>In-Memory)]
         AI -->|3. Request Data for Math| Backend
     end
+
+sequenceDiagram
+    participant U as User (Browser)
+    participant R as React Frontend
+    participant J as Java Backend
+    participant P as Python AI
+
+    U->>R: Opens Dashboard
+    par Parallel Requests
+        R->>J: GET /api/transactions
+        J-->>R: Returns JSON List
+    and
+        R->>P: GET /predict
+        P->>J: GET /api/transactions (Internal Fetch)
+        J-->>P: Returns Raw Data
+        P->>P: Calculate Burn Rate & Days Left
+        P-->>R: Returns Prediction (JSON)
+    end
+    R->>U: Renders Table & Warning Box
+
+classDiagram
+    class Transaction {
+        -Long id
+        -String description
+        -double amount
+        -LocalDate date
+        +getAmount()
+        +setAmount()
+    }
+
+    class TransactionRepository {
+        <<Interface>>
+        +findAll()
+        +save()
+    }
+
+    class TransactionController {
+        +getTransactions()
+        +addTransaction()
+    }
+
+    class DataLoader {
+        +run()
+    }
+
+    TransactionController --> TransactionRepository : Uses
+    DataLoader --> TransactionRepository : Populates
+    TransactionRepository --> Transaction : Manages
