@@ -30,7 +30,7 @@ graph TD
     end
 
 
-    sequenceDiagram
+sequenceDiagram
     participant U as User (Browser)
     participant R as React Frontend
     participant J as Java Backend
@@ -48,6 +48,8 @@ graph TD
         P-->>R: Returns Prediction (JSON)
     end
     R->>U: Renders Table & Warning Box
+
+
 
 classDiagram
     class Transaction {
