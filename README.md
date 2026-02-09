@@ -29,7 +29,11 @@ graph TD
         AI -->|3. Request Data for Math| Backend
     end
 
+```
+2. Sequence Diagram (Data Flow)
+When a user opens the dashboard, the following parallel processes occur to render the UI:
 
+```mermaid
 sequenceDiagram
     participant U as User (Browser)
     participant R as React Frontend
@@ -49,8 +53,12 @@ sequenceDiagram
     end
     R->>U: Renders Table & Warning Box
 
+```
+3. Backend Class Design (Java)
+The Java Backend follows the MVC Pattern to ensure clean separation of code and maintainability.
 
 
+```mermaid
 classDiagram
     class Transaction {
         -Long id
